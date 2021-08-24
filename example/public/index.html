@@ -1,14 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext"
+    />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script>
+      (function(win, export_obj) {
+        win["TeaAnalyticsObject"] = export_obj;
+        if (!win[export_obj]) {
+          function _collect() {
+            _collect.q.push(arguments);
+          }
+          _collect.q = _collect.q || [];
+          win[export_obj] = _collect;
+        }
+        win[export_obj].l = +new Date();
+      })(window, "collectEvent");
+    </script>
+    <script
+      async
+      src="https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/collect-autotrack-rangers.js"
+    ></script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
 
+      window.collectEvent("init", {
+        app_id: urlParams.get("app_id")
+          ? Number(urlParams.get("app_id"))
+          : 164287, //  必须替换成申请的 app_id
+        channel: "cn",
+        autotrack: true,
+        log: true, // 开启调试日志，可用于查看ssid，web_id, 和user_unique_id， 上线请关闭
+        enable_ab_test: true, // boolean类型，是否开启A/B实验功能
+        enable_ab_visual: true, // boolean类型，按需开启，默认关闭，是否开启A/B实验的可视化编辑模式功能
+        enable_multilink: true, //boolean类型，按需开启，默认关闭，是否开启A/B实验的多链接实验功能，默认为false
+        multilink_timeout_ms: 3000, //number类型，A/B实验的多链接实验中关闭遮罩层的时间，默认500毫秒
+        ab_channel_domain: urlParams.get("prod")
+          ? undefined
+          : "https://ab2b-lf.bytedance.net",
+      });
+      window.collectEvent("start");
+
+      //自定义事件，示例
+      window.collectEvent("test_event", {
+        from: "index",
+      });
+
+      window.collectEvent("config", {
+        user_unique_id: urlParams.get("uuid"),
+        user_id: urlParams.get("user_id") || urlParams.get("uid"),
+        device_id: urlParams.get("did") || urlParams.get("device_id"),
+      });
+    </script>
     <title>tabler-react</title>
   </head>
 
